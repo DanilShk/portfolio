@@ -2,20 +2,19 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
   Param,
   Post,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { PayloadUser } from 'src/auth/types/payload-usr.type';
+import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
 import { IdUUIDDto } from 'src/common/dto/id.dto';
 import { CreateImageDto, FindAllDto } from './dto/image.dto';
 import { ImageService } from './image.service';
-import { Public } from 'src/common/decorators/public.decorator';
-import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 @Controller('images')
 export class ImageController {
