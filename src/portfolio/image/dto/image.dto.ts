@@ -27,6 +27,9 @@ export class CreateImageDto {
   })
   @IsString()
   description: string;
+
+  @ApiProperty({ type: 'string', format: 'binary' })
+  file: any;
 }
 
 export class FindAllDto extends SortDto {}

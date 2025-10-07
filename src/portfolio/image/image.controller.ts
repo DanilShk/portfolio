@@ -8,7 +8,12 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+} from '@nestjs/swagger';
 import { PayloadUser } from 'src/auth/types/payload-usr.type';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
@@ -28,6 +33,11 @@ export class ImageController {
   })
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'upload image',
+    type: CreateImageDto,
+  })
   upload(
     @UploadedFile()
     file: Express.Multer.File,
