@@ -1,0 +1,52 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.${NODE_ENV}
+    ports:
+      - '3000:${PORT}'
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - data_backend:/usr/src/app/uploads
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: ./usr/src/app/src
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: ./.env.${NODE_ENV}
+        - action: rebuild
+          path: ./dockerfiles
+        - action: rebuild
+          path: ./sequelize/migrations
+        - action: sync
+          path: ./sequelize
+          target: ./usr/src/app/src/sequelize
+          ignore:
+            - ./sequelize/migrations/
+  db:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    ports:
+      - 5432:${PG_PORT}
+    volumes:
+      - data_pg:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  data_pg:
+  data_backend:
