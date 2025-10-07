@@ -7,6 +7,7 @@ export class CreateImageDto {
   @ApiProperty({
     type: String,
     example: randomUUID(),
+    description: 'Portfolio ID the image belongs to (UUID)',
   })
   @IsUUID()
   portfolioId: string;
@@ -14,6 +15,7 @@ export class CreateImageDto {
   @ApiProperty({
     type: String,
     example: 'title',
+    description: 'Image name',
   })
   @IsString()
   name: string;
@@ -21,6 +23,7 @@ export class CreateImageDto {
   @ApiProperty({
     type: String,
     example: 'description',
+    description: 'Image description',
   })
   @IsString()
   description: string;

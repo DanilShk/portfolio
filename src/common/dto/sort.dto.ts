@@ -7,6 +7,7 @@ export class SortDto {
   @ApiPropertyOptional({
     type: String,
     example: 'createdAt',
+    description: 'Field to sort by (e.g., createdAt)',
   })
   @IsOptional()
   @IsString()
@@ -15,6 +16,7 @@ export class SortDto {
   @ApiPropertyOptional({
     enum: SortEnum,
     example: SortEnum.ASC,
+    description: 'Sort direction: ASC or DESC',
   })
   @IsOptional()
   @IsEnum(SortEnum)

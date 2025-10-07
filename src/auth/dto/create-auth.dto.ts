@@ -1,10 +1,11 @@
-import { ApiProperty, PickType } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, Matches } from 'class-validator';
 
 export class SingUpDto {
   @ApiProperty({
     type: String,
     example: 'vasya@gmail.com',
+    description: 'User email',
   })
   @IsEmail()
   email: string;
@@ -12,6 +13,7 @@ export class SingUpDto {
   @ApiProperty({
     type: String,
     example: 'MemeGen2024!',
+    description: 'User password (min 8 chars: upper, lower, number, special)',
   })
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.{8,})/, {
     message:
